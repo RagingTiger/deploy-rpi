@@ -52,12 +52,18 @@ setup_client_ovpn(){
 }
 
 setup_ddns(){
+  # create dirs
+  sudo mkdir -p data/ddns
+
   # create config file
-  touch data/ddns/config.json
+  sudo touch data/ddns/config.json
+
   # Owned by user ID of Docker container (1000)
   sudo chown -R 1000 data/ddns
+
   # all access (for creating json database file data/updates.json)
   sudo chmod 700 data/ddns
+  
   # read access only
   sudo chmod 400 data/ddns/config.json
 }

@@ -25,11 +25,11 @@ run_ddns(){
 
 main(){
   # setup ovpn
-  prompt "Would you to run OpenVPN? [Y/n]: "
+  prompt "Would you like to run OpenVPN? [Y/n]: "
   get_response run_ovpn 'Y' false
 
   # setup ddns
-  prompt "Would you to run DynamicDNS? [Y/n]: "
+  prompt "Would you like to run DynamicDNS? [Y/n]: "
   get_response run_ddns 'Y' false
 }
 

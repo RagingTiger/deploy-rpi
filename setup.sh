@@ -63,9 +63,27 @@ setup_ddns(){
 
   # all access (for creating json database file data/updates.json)
   sudo chmod 700 data/ddns
-  
+
   # read access only
   sudo chmod 400 data/ddns/config.json
+}
+
+setup_pihole(){
+  # setting data dir
+  PIHOLE_BASE="data/pihole"
+
+  # checking for data dir
+  [[ -d "$PIHOLE_BASE" ]] || \
+  sudo mkdir -p "$PIHOLE_BASE" || \
+  { echo "Couldn't create storage directory: $PIHOLE_BASE"; exit 1; }
+
+  # get server address
+  prompt "Enter the server address for the Pi-hole server: "
+  local server_addr
+  server_addr=$(get_response '*' true)
+
+  # store address
+  echo "$server_addr"  | sudo tee "$PIHOLE_BASE/.SERVER_ADDR" > /dev/null
 }
 
 main(){
@@ -80,6 +98,10 @@ main(){
   # setup ddns
   prompt "Would you like to setup DynamicDNS? [Y/n]: "
   get_response setup_ddns 'Y' false
+
+  # setup pihole
+  prompt "Would you like to setup Pi-hole? [Y/n]: "
+  get_response setup_pihole 'Y' false
 }
 
 # execute

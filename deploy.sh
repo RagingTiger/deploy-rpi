@@ -39,7 +39,7 @@ run_pihole(){
   docker run -d \
       --name pihole \
       -p 53:53/tcp -p 53:53/udp \
-      -p 80:9000 \
+      -p 9000:80 \
       -e TZ="America/Chicago" \
       -v "$(pwd)/${PIHOLE_BASE}/etc-pihole:/etc/pihole" \
       -v "$(pwd)/${PIHOLE_BASE}/etc-dnsmasq.d:/etc/dnsmasq.d" \
@@ -57,7 +57,7 @@ run_pihole(){
     if [ "$(docker inspect -f "{{.State.Health.Status}}" pihole)" == "healthy" ] ; then
       printf ' OK'
       echo -e "\n$(docker logs pihole 2> /dev/null | grep 'password:')
-               for your pi-hole: https://${IP}/admin/:9000"
+               for your pi-hole: https://${server_addr}/admin/:9000"
       exit 0
     else
       sleep 3

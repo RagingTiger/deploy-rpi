@@ -11,10 +11,11 @@ must be remembered to deploy these common applications.
 
 # Applications
 The following is a list of applications that are available through the
-*deploy script*:
+*deploy script* (**NOTE**: an asterisk `*` next to the name means additional setup
+is required, consult the documentation):
 + [OpenVPN](https://github.com/RagingTiger/docker-openvpn)
 + [DDNS Updater](https://github.com/qdm12/ddns-updater)
-+ [Pi-hole](https://github.com/pi-hole/docker-pi-hole)
++ [Pi-hole](https://github.com/pi-hole/docker-pi-hole)*
 
 # Usage
 The following will walk through the *usage* of the *shell scripts* available in

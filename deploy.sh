@@ -57,7 +57,7 @@ run_pihole(){
     if [ "$(docker inspect -f "{{.State.Health.Status}}" pihole)" == "healthy" ] ; then
       printf ' OK'
       echo -e "\n$(docker logs pihole 2> /dev/null | grep 'password:')
-               for your pi-hole: https://${server_addr}:9000/admin
+               for your pi-hole: https://${server_addr}:9000/admin"
       exit 0
     else
       sleep 3

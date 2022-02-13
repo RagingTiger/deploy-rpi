@@ -1,6 +1,9 @@
 # libs
 source lib/get_input.sh
 
+# globals
+VARS_DIR="data/vars"
+
 # funcs
 run_ovpn(){
   docker run \
@@ -72,6 +75,24 @@ run_pihole(){
   done;
 }
 
+run_shairport_sync(){
+  # checking for vars dir
+  [[ -d "$VARS_DIR" ]] || \
+  { echo "Please run setup to create vars directory: $VARS_DIR"; exit 1; }
+
+  # get server address
+  local stereo_name="$(sudo cat "$VARS_DIR/.SHRPRTSNC_NAME")"
+
+  # deploy server wtih stereo name
+  docker run \
+          -d \
+          --restart unless-stopped \
+          --net host \
+          --device /dev/snd \
+          -e AIRPLAY_NAME="$stereo_name" \
+          ghcr.io/ragingtiger/shairport-sync:master
+}
+
 main(){
   # deploy ovpn
   prompt "Would you like to run OpenVPN? [Y/n]: "
@@ -84,6 +105,10 @@ main(){
   # deploy pihole
   prompt "Would you like to run Pi-hole? [Y/n]: "
   get_response run_pihole 'Y' false
+
+  # deploy shairport-sync
+  prompt "Would you like to run Shairport-Sync? [Y/n]: "
+  get_response run_shairport_sync 'Y' false
 }
 
 # execute

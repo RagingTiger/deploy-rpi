@@ -17,6 +17,7 @@ is required, see [Additional Setup](#additional-setup)):
 + [DDNS Updater](https://github.com/qdm12/ddns-updater)
 + [Pi-hole](https://github.com/pi-hole/docker-pi-hole)*
 + [Shairport-Sync](https://github.com/mikebrady/shairport-sync)
++ [Cups-Airprint](https://github.com/RagingTiger/cups-airprint)*
 
 # Usage
 The following will walk through the *usage* of the *shell scripts* available in
@@ -52,3 +53,7 @@ application:
   source
   (see [Pi-hole Post-Install](https://docs.pi-hole.net/main/post-install/) for
   more info).
++ [Cups-Airprint](https://github.com/chuckcharlie/cups-avahi-airprint) will
+  require additional steps to *setup* a printer. Unfortunately there does not
+  currently seem to be much *official* documentation on the *web UI* for this
+  process. 

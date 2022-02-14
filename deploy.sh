@@ -1,9 +1,6 @@
 # libs
 source lib/get_input.sh
 
-# globals
-VARS_DIR="data/vars"
-
 # funcs
 run_ovpn(){
   docker run \
@@ -85,6 +82,22 @@ run_shairport_sync(){
              mikebrady/shairport-sync
 }
 
+run_cups_airprint(){
+  # deploying
+  docker run -d \
+       --name=cups \
+       --restart=unless-stopped \
+       --net=host \
+       -v /var/run/dbus:/var/run/dbus \
+       -v cups-config:/config \
+       -v cups-services:/services \
+       --device /dev/bus \
+       --device /dev/usb \
+       -e CUPSADMIN="admin" \
+       -e CUPSPASSWORD="password" \
+       ghcr.io/ragingtiger/cups-airprint:master
+}
+
 main(){
   # deploy ovpn
   prompt "Would you like to run OpenVPN? [Y/n]: "
@@ -101,6 +114,10 @@ main(){
   # deploy shairport-sync
   prompt "Would you like to run Shairport-Sync? [Y/n]: "
   get_response run_shairport_sync 'Y' false
+
+  # deploy cups-airprint
+  prompt "Would you like to run Cups/Airprint server? [Y/n]: "
+  get_response run_cups_airprint 'Y' false
 }
 
 # execute

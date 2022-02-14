@@ -1,9 +1,6 @@
 # libs
 source lib/get_input.sh
 
-# globals
-VARS_DIR="data/vars"
-
 # funcs
 setup_ovpn(){
   # get servername for VPN
@@ -88,22 +85,6 @@ setup_pihole(){
   # store address
   echo "$server_addr"  | sudo tee "$PIHOLE_BASE/.SERVER_ADDR" > /dev/null
 }
-
-setup_shairport_sync(){
-  # get name for server
-  prompt "Enter the name you want for your stereo/server: "
-  local stereo_name
-  stereo_name=$(get_response '*' true)
-
-  # checking for data dir
-  [[ -d "$VARS_DIR" ]] || \
-  sudo mkdir -p "$VARS_DIR" || \
-  { echo "Couldn't create variables directory: $VARS_DIR"; exit 1; }
-
-  # store stereo name
-  echo "$stereo_name"  | sudo tee "$VARS_DIR/.SHRPRTSNC_NAME" > /dev/null
-}
-
 
 main(){
   # setup ovpn

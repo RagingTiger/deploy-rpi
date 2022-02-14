@@ -16,7 +16,7 @@ is required, see [Additional Setup](#additional-setup)):
 + [OpenVPN](https://github.com/RagingTiger/docker-openvpn)
 + [DDNS Updater](https://github.com/qdm12/ddns-updater)
 + [Pi-hole](https://github.com/pi-hole/docker-pi-hole)*
-+ [Shairport-Sync](https://github.com/kevineye/docker-shairport-sync)
++ [Shairport-Sync](https://github.com/mikebrady/shairport-sync)
 
 # Usage
 The following will walk through the *usage* of the *shell scripts* available in

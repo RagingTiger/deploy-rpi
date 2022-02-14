@@ -76,21 +76,13 @@ run_pihole(){
 }
 
 run_shairport_sync(){
-  # checking for vars dir
-  [[ -d "$VARS_DIR" ]] || \
-  { echo "Please run setup to create vars directory: $VARS_DIR"; exit 1; }
-
-  # get server address
-  local stereo_name="$(sudo cat "$VARS_DIR/.SHRPRTSNC_NAME")"
-
-  # deploy server wtih stereo name
-  docker run \
-          -d \
-          --restart unless-stopped \
-          --net host \
-          --device /dev/snd \
-          -e AIRPLAY_NAME="$stereo_name" \
-          ghcr.io/ragingtiger/shairport-sync:master
+  # deploying
+  docker run -d \
+             --name shairport-sync \
+             --restart unless-stopped \
+             --net host \
+             --device /dev/snd \
+             mikebrady/shairport-sync
 }
 
 main(){

@@ -17,6 +17,7 @@ run_ddns(){
   docker run \
            --name ddns \
            --restart unless-stopped \
+           --dns=1.1.1.1 \
            -d \
            -p 8000:8000/tcp \
            -v "$(pwd)"/data/ddns:/updater/data \

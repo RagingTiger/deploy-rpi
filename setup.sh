@@ -86,6 +86,24 @@ setup_pihole(){
   echo "$server_addr"  | sudo tee "$PIHOLE_BASE/.SERVER_ADDR" > /dev/null
 }
 
+setup_owntone(){
+  # setting data dir
+  OWNTONE_BASE="data/owntone"
+
+  # checking for data dir
+  [[ -d "$OWNTONE_BASE" ]] || \
+  sudo mkdir -p "$OWNTONE_BASE" || \
+  { echo "Couldn't create storage directory: $OWNTONE_BASE"; exit 1; }
+
+  # get server address
+  prompt "Enter the full path for the music library: "
+  local music_lib
+  music_lib=$(get_response '*' true)
+
+  # store address
+  echo "$music_lib"  | sudo tee "$OWNTONE_BASE/.MUSIC_LIB_PATH" > /dev/null
+}
+
 main(){
   # setup ovpn
   prompt "Would you like to setup OpenVPN? [Y/n]: "
@@ -106,6 +124,10 @@ main(){
   # setup shairport-sync
   prompt "Would you like to setup Shairport-Sync? [Y/n]: "
   get_response setup_shairport_sync 'Y' false
+
+  # setup owntone server
+  prompt "Would you like to setup Owntone Server? [Y/n]: "
+  get_response setup_owntone 'Y' false
 }
 
 # execute

@@ -99,6 +99,30 @@ run_cups_airprint(){
        ghcr.io/ragingtiger/cups-airprint:master
 }
 
+run_owntone(){
+  # https://docs.linuxserver.io/images/docker-daapd/
+  # setting data dir
+  OWNTONE_BASE="data/owntone"
+
+  # checking for data dir
+  [[ -d "$OWNTONE_BASE" ]] || \
+  { echo "Please run setup to create data directory: $OWNTONE_BASE"; exit 1; }
+
+  # get server address
+  local music_lib="$(sudo cat "$OWNTONE_BASE/.MUSIC_LIB_PATH")"
+
+  docker run -d \
+    --name=daapd \
+    --net=host \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    -e TZ="America/Chicago" \
+    -v "$(pwd)/${OWNTONE_BASE}/config:/config" \
+    -v "${music_lib}:/music" \
+    --restart unless-stopped \
+    lscr.io/linuxserver/daapd:latest
+}
+
 main(){
   # deploy ovpn
   prompt "Would you like to run OpenVPN? [Y/n]: "
@@ -119,6 +143,10 @@ main(){
   # deploy cups-airprint
   prompt "Would you like to run Cups/Airprint server? [Y/n]: "
   get_response run_cups_airprint 'Y' false
+
+  # deploy owntone
+  prompt "Would you like to run Owntone server? [Y/n]: "
+  get_response run_owntone 'Y' false
 }
 
 # execute
